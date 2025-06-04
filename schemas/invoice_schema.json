@@ -1,0 +1,100 @@
+{
+    "name": "invoice_schema",
+    "description": "Esquema de validação para notas fiscais",
+    "version": "1.0",
+    "strict": true,
+    "fields": {
+      "invoice_number": {
+        "type": "string",
+        "required": true,
+        "description": "Número da nota fiscal",
+        "options": {
+          "min_length": 1,
+          "max_length": 20
+        }
+      },
+      "issue_date": {
+        "type": "date",
+        "required": true,
+        "description": "Data de emissão",
+        "options": {
+          "format": "%d/%m/%Y"
+        }
+      },
+      "total_value": {
+        "type": "decimal",
+        "required": true,
+        "description": "Valor total da nota",
+        "options": {
+          "min": 0
+        }
+      },
+      "issuer_name": {
+        "type": "string",
+        "required": true,
+        "description": "Nome do emitente",
+        "options": {
+          "min_length": 2
+        }
+      },
+      "issuer_document": {
+        "type": "cnpj",
+        "required": true,
+        "description": "CNPJ do emitente"
+      },
+      "recipient_name": {
+        "type": "string",
+        "required": true,
+        "description": "Nome do destinatário",
+        "options": {
+          "min_length": 2
+        }
+      },
+      "recipient_document": {
+        "type": "string",
+        "required": true,
+        "description": "CPF/CNPJ do destinatário"
+      },
+      "tax_value": {
+        "type": "decimal",
+        "required": false,
+        "description": "Valor dos impostos",
+        "options": {
+          "min": 0
+        }
+      },
+      "discount_value": {
+        "type": "decimal",
+        "required": false,
+        "description": "Valor de descontos",
+        "options": {
+          "min": 0
+        }
+      },
+      "shipping_value": {
+        "type": "decimal",
+        "required": false,
+        "description": "Valor do frete",
+        "options": {
+          "min": 0
+        }
+      },
+      "access_key": {
+        "type": "string",
+        "required": false,
+        "description": "Chave de acesso da NF-e",
+        "options": {
+          "pattern": "^[0-9]{44}$"
+        }
+      }
+    },
+    "custom_validations": [
+      {
+        "name": "total_consistency",
+        "condition": "abs(data.get('total_value', 0) - (data.get('tax_value', 0) + data.get('discount_value', 0) + data.get('shipping_value', 0))) <= 0.01",
+        "message": "A soma dos valores não confere com o total",
+        "severity": "warning"
+      }
+    ]
+  }
+  

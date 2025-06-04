@@ -1,0 +1,28 @@
+{
+    "document_type": "invoice",
+    "description": "Padrões para detecção automática de notas fiscais",
+    "keywords": [
+      "DANFE",
+      "Nota Fiscal Eletrônica",
+      "NF-e",
+      "Documento Auxiliar",
+      "CNPJ",
+      "Emitente",
+      "Destinatário",
+      "Valor Total",
+      "Chave de Acesso"
+    ],
+    "patterns": [
+      "NF-e nº\\s*\\d+",
+      "Chave de Acesso:\\s*\\d{44}",
+      "DANFE",
+      "DOCUMENTO AUXILIAR DA NOTA FISCAL ELETRÔNICA",
+      "IDENTIFICAÇÃO DO EMITENTE",
+      "NATUREZA DA OPERAÇÃO",
+      "DATA DE EMISSÃO",
+      "DESTINATÁRIO/REMETENTE",
+      "VALOR TOTAL DA NOTA",
+      "CNPJ:\\s*\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}"
+    ],
+    "confidence_threshold": 0.6
+  }  
